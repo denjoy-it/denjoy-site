@@ -1,0 +1,272 @@
+/**
+ * Approval Modal Styling
+ */
+
+.approval-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.2s ease-out;
+  opacity: 0;
+}
+
+.approval-modal.is-visible {
+  opacity: 1;
+}
+
+.approval-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+.approval-modal-content {
+  position: relative;
+  z-index: 1;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  max-width: 480px;
+  width: 90%;
+  animation: slideUp 0.3s ease-out;
+}
+
+.approval-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.approval-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.approval-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.approval-modal-close:hover {
+  background: #f5f5f5;
+  color: #1a1a1a;
+}
+
+.approval-modal-body {
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.approval-modal-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  animation: pulse 0.5s ease-out;
+}
+
+.approval-modal-action-desc {
+  font-size: 16px;
+  color: #333;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
+
+.approval-modal-approvers {
+  background: #f9f9f9;
+  border-left: 4px solid #0066cc;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.approval-modal-approvers label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.approval-modal-approvers-needed {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0066cc;
+  margin: 0;
+}
+
+.approval-modal-info {
+  text-align: left;
+  background: #f0f6ff;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 16px 0 0 0;
+}
+
+.approval-modal-info p {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  color: #333;
+}
+
+.approval-modal-info strong {
+  font-weight: 600;
+  color: #0066cc;
+}
+
+.approval-modal-info ul {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+}
+
+.approval-modal-info li {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.approval-modal-footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #eaeaea;
+  justify-content: flex-end;
+}
+
+/* Approval message toast notifications */
+
+.approval-message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  max-width: 400px;
+  padding: 16px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 9998;
+  animation: slideInRight 0.3s ease-out;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.approval-message.is-visible {
+  opacity: 1;
+}
+
+.approval-message-success {
+  background: #d4f4dd;
+  border-left: 4px solid #2d8a6b;
+  color: #1b5340;
+}
+
+.approval-message-success strong {
+  color: #2d8a6b;
+}
+
+.approval-message-info {
+  background: #d4e8ff;
+  border-left: 4px solid #0066cc;
+  color: #003d7a;
+}
+
+.approval-message-info strong {
+  color: #0066cc;
+}
+
+.approval-message strong {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.approval-message p {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+}
+
+/* Animations */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .approval-modal-content {
+    width: 95%;
+  }
+
+  .approval-message {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+}

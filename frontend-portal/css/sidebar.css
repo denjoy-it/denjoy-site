@@ -1,0 +1,973 @@
+/* ═══════════════════════════════════════════════════════
+   DENJOY PORTAL — Sidebar Navigation
+   Vervangt de horizontale dropdown-nav en de subnav-balk.
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Sidebar breedte token (gebruikt ook in portal.css) ── */
+:root {
+  --sidebar-w: 248px;
+  --sidebar-w-collapsed: 56px;
+  --topbar-h: 54px;
+}
+
+/* ════════════════════════════════════════
+   LAYOUT WRAPPER
+   ════════════════════════════════════════ */
+.portal-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ════════════════════════════════════════
+   SIDEBAR
+   ════════════════════════════════════════ */
+.portal-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(255,107,43,0.08) 0%, rgba(255,107,43,0.02) 14%, rgba(255,255,255,0) 30%),
+    linear-gradient(180deg, #11131a 0%, #0d0f15 100%);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  overflow: hidden;
+  box-shadow: 12px 0 38px rgba(3, 6, 16, 0.26);
+}
+
+/* Subtiele oranje gloed bovenaan */
+.portal-sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 240px;
+  background: radial-gradient(ellipse 220px 132px at 50% -10%, rgba(255, 107, 43, 0.16), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.portal-sidebar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.035), transparent 110px),
+    linear-gradient(90deg, rgba(255,255,255,0.022), transparent 32px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Sidebar header: logo + tenant ── */
+.sidebar-header {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  padding: 0 1rem;
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+}
+
+.sidebar-logo-img {
+  height: 32px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.98;
+}
+
+/* ── Nav scroll container ── */
+.sidebar-nav {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.85rem 0 1.1rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+}
+
+/* ── Enkele top-level item (bv. Overzicht) ── */
+.sidebar-item {
+  padding: 0 0.8rem;
+  margin-bottom: 4px;
+}
+
+.sidebar-item-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.72rem;
+  width: 100%;
+  min-height: 40px;
+  padding: 0.58rem 0.88rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.58);
+  font-family: var(--font);
+  font-size: 0.87rem;
+  font-weight: 560;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+  overflow: hidden;
+  border: 1px solid transparent;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.015);
+}
+
+.sidebar-item-btn:hover {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.94);
+  border-color: rgba(255,255,255,0.06);
+  transform: translateY(-1px);
+}
+
+.sidebar-item-btn.active {
+  background: linear-gradient(180deg, rgba(255,107,43,0.2), rgba(255,107,43,0.13));
+  color: #fff4eb;
+  font-weight: 600;
+  border-color: rgba(255,107,43,0.24);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 10px 26px rgba(255,107,43,0.14);
+}
+
+.sidebar-item-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  opacity: 0.72;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-item-btn.active .sidebar-item-icon {
+  opacity: 1;
+}
+
+/* ── Groep (collapsible) ── */
+.sidebar-group {
+  margin: 0 0.8rem 6px;
+}
+
+.sidebar-group-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  min-height: 50px;
+  padding: 0.56rem 0.82rem;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
+  color: rgba(255,255,255,0.56);
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.15s, background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  margin-top: 0;
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+.sidebar-group-toggle:hover {
+  color: rgba(255,255,255,0.92);
+  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+  border-color: rgba(255,255,255,0.08);
+  transform: translateY(-1px);
+}
+
+.sidebar-group-toggle.has-active {
+  color: rgba(255,255,255,0.95);
+  background: linear-gradient(180deg, rgba(255,107,43,0.17), rgba(255,107,43,0.1));
+  border-color: rgba(255,107,43,0.18);
+  box-shadow: 0 12px 28px rgba(255,107,43,0.1);
+}
+
+.sidebar-group-chevron {
+  margin-left: auto;
+  width: 12px;
+  height: 12px;
+  opacity: 0.44;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.sidebar-group.collapsed .sidebar-group-chevron {
+  transform: rotate(-90deg);
+}
+
+/* ── Sub-items container ── */
+.sidebar-group-items {
+  overflow: hidden;
+  transition: max-height 0.25s ease, opacity 0.2s;
+  max-height: 600px;
+  opacity: 1;
+  padding: 0.32rem 0.2rem 0 0.2rem;
+}
+
+.sidebar-group.collapsed .sidebar-group-items {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* ── Sub-item knop ── */
+.sidebar-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.68rem;
+  width: 100%;
+  min-height: 38px;
+  padding: 0.56rem 0.82rem 0.56rem 0.88rem;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.02);
+  color: rgba(255,255,255,0.64);
+  font-family: var(--font);
+  font-size: 0.845rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.13s, color 0.13s, border-color 0.13s, transform 0.13s, box-shadow 0.13s;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 5px;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.045);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.015);
+}
+
+.sidebar-nav-link:hover {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.92);
+  border-color: rgba(255,255,255,0.08);
+  transform: translateY(-1px);
+}
+
+.sidebar-nav-link.active {
+  background: linear-gradient(180deg, rgba(255,107,43,0.19), rgba(255,107,43,0.11));
+  color: #fff4ec;
+  font-weight: 600;
+  border-color: rgba(255,107,43,0.22);
+  box-shadow: 0 12px 28px rgba(255,107,43,0.09);
+}
+
+.sidebar-nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18%;
+  height: 64%;
+  width: 3px;
+  background: var(--orange);
+  border-radius: 0 3px 3px 0;
+}
+
+/* Nav signal badge op groep-label */
+.sidebar-group-signal {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 17px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  flex-shrink: 0;
+}
+
+.sidebar-group-signal--warn {
+  background: rgba(245,158,11,0.18);
+  color: #f59e0b;
+}
+.sidebar-group-signal--urgent {
+  background: rgba(239,68,68,0.18);
+  color: #ef4444;
+}
+
+/* ── Verdeler ── */
+.sidebar-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.12), rgba(255,255,255,0));
+  margin: 0.9rem 1rem 0.8rem;
+}
+
+/* ── Rol-restricted items ── */
+.sidebar-group.role-restricted-nav {
+  display: none;
+}
+
+/* ── Sidebar footer: user info ── */
+.sidebar-footer {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  padding: 0.8rem 0.95rem 0.9rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.02));
+}
+
+.sidebar-footer-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255,107,43,0.22), rgba(255,107,43,0.12));
+  border: 1px solid rgba(255,107,43,0.22);
+  color: var(--orange);
+  font-family: var(--font);
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.sidebar-footer-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar-footer-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-footer-role {
+  font-size: 0.67rem;
+  color: rgba(255,255,255,0.3);
+  font-family: var(--mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-footer-actions {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.sidebar-footer-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar-footer-btn:hover {
+  background: rgba(255,255,255,0.09);
+  color: rgba(255,255,255,0.8);
+}
+
+/* ════════════════════════════════════════
+   TOPBAR (slim, alleen utility)
+   ════════════════════════════════════════ */
+.portal-topbar {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-w);
+  right: 0;
+  height: var(--topbar-h);
+  background: rgba(246, 245, 243, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 0.75rem;
+}
+
+.topbar-tenant {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+/* ════════════════════════════════════════
+   CONTENT AREA — met sidebar-offset
+   ════════════════════════════════════════ */
+.portal-sidebar ~ .portal-main-wrap,
+.portal-main-wrap {
+  margin-left: var(--sidebar-w);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.portal-main-wrap .content-area {
+  margin-top: var(--topbar-h);
+  flex: 1;
+}
+
+/* Subnav volledig verborgen */
+#portalSubnav,
+.portal-subnav {
+  display: none !important;
+}
+
+/* Loading bar positie aanpassen */
+.portal-sidebar ~ .portal-main-wrap .top-loading-bar,
+.portal-main-wrap .top-loading-bar {
+  left: var(--sidebar-w);
+  top: var(--topbar-h);
+}
+
+/* ════════════════════════════════════════
+   DARK MODE
+   ════════════════════════════════════════ */
+[data-theme="dark"] .portal-topbar {
+  background: rgba(15, 17, 23, 0.96);
+  border-bottom-color: var(--border-d);
+}
+
+[data-theme="dark"] .portal-sidebar {
+  background: var(--dark);
+}
+
+/* ════════════════════════════════════════
+   MOBILE SIDEBAR TOGGLE
+   ════════════════════════════════════════ */
+.sidebar-mobile-toggle {
+  display: none;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.sidebar-mobile-toggle:hover {
+  background: rgba(0,0,0,0.06);
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 195;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --sidebar-w: 248px;
+  }
+
+  .portal-topbar {
+    left: 0;
+    padding-left: 1rem;
+  }
+
+  .portal-sidebar ~ .portal-main-wrap,
+  .portal-main-wrap {
+    margin-left: 0;
+  }
+
+  .portal-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 210;
+  }
+
+  .portal-sidebar.sidebar-open {
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.35);
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+  .sidebar-mobile-toggle {
+    display: flex;
+  }
+
+  .portal-main-wrap .top-loading-bar {
+    left: 0;
+  }
+}
+
+/* ════════════════════════════════════════
+   SIDEBAR TENANT SWITCHER
+   ════════════════════════════════════════ */
+.sb-tenant-area {
+  flex-shrink: 0;
+  padding: 10px 10px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.sb-tenant-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+  min-height: 54px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+.sb-tenant-btn:hover {
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.045));
+  border-color: rgba(255,107,43,0.35);
+}
+
+/* Kleur-dot: geeft tenant health-status aan */
+.sb-tenant-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #6b7280;
+  transition: background 0.2s;
+  box-shadow: 0 0 0 3px rgba(107,114,128,0.15);
+}
+
+.sb-tenant-dot.is-good     { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.18); }
+.sb-tenant-dot.is-warning  { background: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.18); }
+.sb-tenant-dot.is-critical { background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.18); }
+.sb-tenant-dot.is-unknown  { background: #6b7280; }
+
+.sb-tenant-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+  /* verborgen wanneer collapsed */
+  opacity: 1;
+  transition: opacity 0.15s;
+}
+
+.sb-tenant-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.88);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sb-tenant-score {
+  font-size: 11px;
+  color: rgba(255,255,255,0.48);
+  font-family: var(--mono, monospace);
+  white-space: nowrap;
+}
+
+.sb-tenant-chevron {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  color: rgba(255,255,255,0.3);
+  opacity: 1;
+  transition: opacity 0.15s, transform 0.2s;
+}
+
+.sb-tenant-btn[aria-expanded="true"] .sb-tenant-chevron {
+  transform: rotate(180deg);
+}
+
+/* Collapsed: alleen de dot zichtbaar, info + chevron verbergen */
+body.sidebar-collapsed .sb-tenant-area {
+  padding: 6px 0 8px;
+}
+
+body.sidebar-collapsed .sb-tenant-btn {
+  justify-content: center;
+  padding: 10px 8px;
+  gap: 0;
+  border-radius: 12px;
+  margin: 0 10px;
+  width: calc(100% - 20px);
+}
+
+body.sidebar-collapsed .sb-tenant-info,
+body.sidebar-collapsed .sb-tenant-chevron {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+/* ════════════════════════════════════════
+   TOPBAR LAYOUT — breadcrumb naast tenant
+   ════════════════════════════════════════ */
+
+/* Tenant-pill in topbar verbergen: context zit nu in sidebar */
+.portal-topbar .topbar-tenant {
+  display: none !important;
+}
+
+/* Breadcrumb vult de vrijgekomen ruimte */
+.topbar-breadcrumb {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ════════════════════════════════════════
+   COLLAPSED SIDEBAR
+   ════════════════════════════════════════ */
+
+/* Wanneer .sidebar-collapsed op <body> staat, schuift alles mee */
+body.sidebar-collapsed {
+  --sidebar-w: var(--sidebar-w-collapsed);
+}
+
+body.sidebar-collapsed .portal-sidebar {
+  width: var(--sidebar-w-collapsed);
+}
+
+/* Labels, groep-tekst en footer-info verbergen wanneer collapsed */
+body.sidebar-collapsed .sidebar-group-label,
+body.sidebar-collapsed .sidebar-group-signal,
+body.sidebar-collapsed .sidebar-footer-info,
+body.sidebar-collapsed .sidebar-footer-actions,
+body.sidebar-collapsed .sidebar-logo-img,
+body.sidebar-collapsed .sidebar-item-btn span:not(.sidebar-item-icon),
+body.sidebar-collapsed .sidebar-nav-text,
+body.sidebar-collapsed .sidebar-nav-count,
+body.sidebar-collapsed .sidebar-nav-link small {
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  overflow: hidden;
+}
+
+/* Groep chevron verbergen wanneer collapsed */
+body.sidebar-collapsed .sidebar-group-chevron {
+  display: none;
+}
+
+/* Logo kleiner */
+body.sidebar-collapsed .sidebar-header {
+  padding: 0;
+  justify-content: center;
+}
+
+body.sidebar-collapsed .sidebar-logo-img {
+  display: none;
+}
+
+/* Laat alleen het icoon (eerste 36px) zichtbaar bij collapsed groep-toggle */
+body.sidebar-collapsed .sidebar-group-toggle {
+  justify-content: center;
+  padding: 0.52rem;
+  gap: 0;
+  min-height: 42px;
+}
+
+/* Groep-items verbergen wanneer collapsed */
+body.sidebar-collapsed .sidebar-group-items {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* Enkele top-item (Overzicht) centreren */
+body.sidebar-collapsed .sidebar-item {
+  padding: 0 0.5rem;
+}
+
+body.sidebar-collapsed .sidebar-item-btn {
+  justify-content: center;
+  padding: 0.56rem;
+}
+
+body.sidebar-collapsed .sidebar-nav-link {
+  justify-content: center;
+  padding: 0.64rem 0.42rem;
+}
+
+body.sidebar-collapsed .sidebar-nav-state-dot {
+  width: 9px;
+  height: 9px;
+}
+
+/* Footer slanker */
+body.sidebar-collapsed .sidebar-footer {
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+  gap: 0;
+}
+
+/* Sidebar transitie */
+.portal-sidebar {
+  transition: width 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Topbar en content mee-animeren */
+.portal-topbar,
+.portal-main-wrap {
+  transition: left 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              margin-left 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Iconen per groep-header ── */
+.sidebar-group-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.045));
+  border: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  position: relative;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.015);
+}
+
+.sidebar-group-toggle:hover .sidebar-group-icon,
+.sidebar-group-toggle.has-active .sidebar-group-icon {
+  background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+}
+
+.sidebar-group-toggle.has-active .sidebar-group-icon {
+  background: linear-gradient(180deg, rgba(255,107,43,0.28), rgba(255,107,43,0.16));
+  border-color: rgba(255,107,43,0.16);
+  box-shadow: 0 0 0 1px rgba(255,107,43,0.08);
+}
+
+/* Badge op icoon (zichtbaar in collapsed mode) */
+.sidebar-group-icon-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border-radius: 8px;
+  background: #ef4444;
+  border: 1.5px solid var(--dark, #0f1117);
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+body.sidebar-collapsed .sidebar-group-icon-badge.has-count {
+  display: flex;
+}
+
+/* Spacer tussen icoon en label */
+.sidebar-group-toggle {
+  gap: 0.6rem;
+}
+
+.sidebar-nav-state-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(148,163,184,0.72);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 4px rgba(148,163,184,0.09);
+}
+
+.sidebar-nav-state-dot.status-good {
+  background: #22c55e;
+  box-shadow: 0 0 0 4px rgba(34,197,94,0.12);
+}
+
+.sidebar-nav-state-dot.status-warn {
+  background: #f59e0b;
+  box-shadow: 0 0 0 4px rgba(245,158,11,0.12);
+}
+
+.sidebar-nav-state-dot.status-error {
+  background: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239,68,68,0.12);
+}
+
+.sidebar-nav-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-nav-count {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.09);
+  color: rgba(255,255,255,0.78);
+  font-family: var(--mono);
+  font-size: 0.67rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.sidebar-nav-count.has-count {
+  display: inline-flex;
+}
+
+.sidebar-nav-count.status-good {
+  background: rgba(34,197,94,0.14);
+  color: #86efac;
+}
+
+.sidebar-nav-count.status-warn {
+  background: rgba(245,158,11,0.16);
+  color: #fcd34d;
+}
+
+.sidebar-nav-count.status-error {
+  background: rgba(239,68,68,0.18);
+  color: #fca5a5;
+}
+
+/* ── Sidebar collapse-toggle knop ── */
+.sidebar-collapse-btn {
+  position: fixed;
+  left: calc(var(--sidebar-w) - 11px);
+  top: 16px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1e2130;
+  border: 1.5px solid rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 250;
+  transition: left 0.22s cubic-bezier(0.4, 0, 0.2, 1), background 0.15s;
+  color: rgba(255,255,255,0.4);
+}
+
+.sidebar-collapse-btn:hover {
+  background: #2d3148;
+  color: rgba(255,255,255,0.9);
+}
+
+.sidebar-collapse-btn svg {
+  width: 11px;
+  height: 11px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+body.sidebar-collapsed .sidebar-collapse-btn {
+  left: calc(var(--sidebar-w-collapsed) - 11px);
+}
+
+body.sidebar-collapsed .sidebar-collapse-btn svg {
+  transform: rotate(180deg);
+}
+
+/* ── Breadcrumb in topbar ── */
+.topbar-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar-breadcrumb-group {
+  color: var(--text-muted, #6b7280);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.topbar-breadcrumb-sep {
+  color: #d1d5db;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.topbar-breadcrumb-section {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mobiel: breadcrumb verbergen op kleine schermen */
+@media (max-width: 768px) {
+  .topbar-breadcrumb { display: none; }
+  .sidebar-collapse-btn { display: none; }
+}

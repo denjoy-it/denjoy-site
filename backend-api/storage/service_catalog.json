@@ -1,0 +1,146 @@
+[
+  {
+    "id": "svc-identity-hardening",
+    "name": "Identity Hardening",
+    "category": "Security",
+    "tier": "Managed",
+    "description": "MFA, guests en rolhygiëne continu monitoren.",
+    "price_from": "EUR 199/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-ca-lifecycle",
+    "name": "Conditional Access Lifecycle",
+    "category": "Security",
+    "tier": "Managed",
+    "description": "Ontwerp, implementatie en onderhoud van CA policies.",
+    "price_from": "EUR 249/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-secure-score-sprint",
+    "name": "Secure Score Sprint",
+    "category": "Security",
+    "tier": "Project",
+    "description": "Versneld verbetertraject op Secure Score en quick wins.",
+    "price_from": "EUR 1250",
+    "status": "active"
+  },
+  {
+    "id": "svc-audit-monitoring",
+    "name": "Audit & Threat Monitoring",
+    "category": "Security",
+    "tier": "Managed",
+    "description": "Detectie op auditlog, sign-ins en verdachte events.",
+    "price_from": "EUR 299/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-compliance-baseline",
+    "name": "Compliance Baseline",
+    "category": "Compliance",
+    "tier": "Managed",
+    "description": "CIS-baselines met periodieke score-updates en rapportage.",
+    "price_from": "EUR 229/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-zerotrust-roadmap",
+    "name": "Zero Trust Roadmap",
+    "category": "Advisory",
+    "tier": "Advisory",
+    "description": "Roadmap en maturiteitsgroei over identity, devices en data.",
+    "price_from": "EUR 1850",
+    "status": "active"
+  },
+  {
+    "id": "svc-exchange-protection",
+    "name": "Exchange Protection",
+    "category": "Collaboration",
+    "tier": "Managed",
+    "description": "Mailbox controls, forwarding checks en mailflow hardening.",
+    "price_from": "EUR 179/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-sharepoint-governance",
+    "name": "SharePoint Governance",
+    "category": "Collaboration",
+    "tier": "Managed",
+    "description": "Site-governance, access reviews en databeheer.",
+    "price_from": "EUR 179/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-backup-continuity",
+    "name": "Backup Continuity",
+    "category": "Continuity",
+    "tier": "Managed",
+    "description": "Backupdekking, restore tests en continuiteitsrapportage.",
+    "price_from": "EUR 159/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-endpoint-compliance",
+    "name": "Endpoint Compliance",
+    "category": "Device",
+    "tier": "Managed",
+    "description": "Intune compliance en device hardening per klant.",
+    "price_from": "EUR 249/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-azure-cost-opt",
+    "name": "Azure Cost Optimization",
+    "category": "Cloud",
+    "tier": "Managed",
+    "description": "Kosteninzichten, tagging en besparingsoptimalisatie.",
+    "price_from": "EUR 299/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-azure-governance",
+    "name": "Azure Resource Governance",
+    "category": "Cloud",
+    "tier": "Managed",
+    "description": "Governance op subscriptions, resources en alerts.",
+    "price_from": "EUR 329/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-assessment-as-a-service",
+    "name": "Assessment as a Service",
+    "category": "Assessment",
+    "tier": "Managed",
+    "description": "Periodieke assessments met score en verbeterplan.",
+    "price_from": "EUR 299/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-remediation-factory",
+    "name": "Remediation Factory",
+    "category": "Operations",
+    "tier": "Project",
+    "description": "Planmatige uitvoering van verbeteracties en hardening.",
+    "price_from": "EUR 95/uur",
+    "status": "active"
+  },
+  {
+    "id": "svc-executive-reporting",
+    "name": "Executive Reporting",
+    "category": "Advisory",
+    "tier": "Managed",
+    "description": "QBR-ready rapportage en voortgangscommunicatie.",
+    "price_from": "EUR 149/mnd",
+    "status": "active"
+  },
+  {
+    "id": "svc-onboarding-fastlane",
+    "name": "Onboarding Fastlane",
+    "category": "Onboarding",
+    "tier": "Project",
+    "description": "Versnelde onboarding voor nieuwe klanten en tenants.",
+    "price_from": "EUR 1450",
+    "status": "active"
+  }
+]

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:; form-action 'self'; base-uri 'self';">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Diensten — Microsoft 365 Assessment, Beheer & Compliance | Denjoy IT</title>
+<meta name="description" content="Onze diensten voor Microsoft 365: assessment, security-hardening, Intune, automatisering en portaalgedreven beheer. Voor IT-managers die grip willen op uitvoering en risico.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.denjoy.nl/diensten.html">
+<meta property="og:title" content="Diensten — Microsoft 365 Assessment & Beheer | Denjoy IT">
+<meta property="og:description" content="Assessment, implementatie en doorlopend Microsoft 365 beheer met technische diepgang en bestuurbare output.">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://www.denjoy.nl/diensten.html">
+<script src="js/site-theme-init.js"></script>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── DIENSTEN HERO ── */
+.diensten-hero {
+  background: var(--dark);
+  padding: 5.5rem 2.5rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.diensten-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,107,43,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,107,43,0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+}
+
+.diensten-hero::after {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,107,43,0.13) 0%, transparent 68%);
+  top: -80px; right: -80px;
+  pointer-events: none;
+}
+
+.diensten-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  animation: fadeUp 0.55s 0.1s both;
+}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)} }
+
+.diensten-hero h1 {
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.25rem;
+}
+
+.diensten-hero h1 em { font-style: normal; color: var(--orange); }
+
+.diensten-hero-sub {
+  font-size: 0.975rem;
+  color: oklch(70% 0.006 260);
+  line-height: 1.75;
+  max-width: 52ch;
+  margin-bottom: 2.25rem;
+  overflow-wrap: break-word;
+}
+
+/* ── SERVICE CARDS EXTENDED ── */
+.services-grid-ext {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.service-card-ext {
+  background: var(--white);
+  border: 1px solid var(--border-l);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: border-color 0.22s, box-shadow 0.22s, transform 0.22s;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.service-card-ext:hover {
+  border-color: var(--orange);
+  box-shadow: 0 6px 32px var(--orange-glow);
+  transform: translateY(-2px);
+}
+
+.service-card-ext .service-icon-block {
+  width: 44px; height: 44px;
+  background: var(--orange-dim);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.service-card-ext .service-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.service-card-ext .service-desc {
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.service-card-ext .service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: auto;
+}
+
+/* ── DIENSTEN CTA ── */
+.diensten-cta {
+  background: var(--dark);
+  padding: 5rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.diensten-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,107,43,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,107,43,0.03) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+}
+
+.diensten-cta-inner {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 820px) {
+  .services-grid-ext { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="/frontend-portal/images/web.svg" alt="Denjoy IT" class="logo-img">
+  </a>
+  <ul class="nav-links">
+    <li><a href="diensten.html" class="active">Diensten</a></li>
+    <li><a href="werkwijze.html">Werkwijze</a></li>
+    <li><a href="projects.html">Platform</a></li>
+    <li><a href="about.html">Over</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Plan demo</a></li>
+    <li><a href="login.html" class="nav-login">Login</a></li>
+    <li><button id="site-theme-btn" class="nav-theme-btn" title="Thema wisselen">🌙</button></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu openen" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <a href="diensten.html" class="active">Diensten</a>
+  <a href="werkwijze.html">Werkwijze</a>
+  <a href="projects.html">Platform</a>
+  <a href="about.html">Over</a>
+  <a href="index.html#contact" class="nav-cta">Plan demo</a>
+  <a href="login.html" class="nav-login">Login</a>
+</div>
+
+<!-- HERO -->
+<section class="diensten-hero" id="main-content">
+  <div class="diensten-hero-inner">
+    <div class="section-label label-security">Wat wij doen</div>
+    <h1>Microsoft 365 beheer van <em>A tot Z</em></h1>
+    <p class="diensten-hero-sub">Van security en device management tot geautomatiseerde assessments en een eigen klantportaal: wij richten complete Microsoft 365-omgevingen in en maken kwaliteit continu inzichtelijk.</p>
+    <div style="display:flex;gap:0.85rem;flex-wrap:wrap">
+      <a href="index.html#contact" class="btn btn-primary">Neem contact op →</a>
+      <a href="werkwijze.html" class="btn btn-ghost-dark">Bekijk werkwijze</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES SECTIE -->
+<section class="section" id="services">
+  <div class="reveal">
+    <div class="section-label label-analytics">Alle diensten</div>
+    <h2 class="section-title">Wat wij voor je kunnen doen</h2>
+    <p class="section-sub">Van een eerste assessment tot structureel beheer: diensten die direct gekoppeld zijn aan meetbare resultaten in het klantportaal.</p>
+  </div>
+
+  <div class="services-grid-ext">
+    <!-- Security -->
+    <div class="service-card-ext reveal rd1" id="security">
+      <div class="service-icon-block"><div class="svc-icon shield"></div></div>
+      <div class="service-title">Security &amp; Zero Trust</div>
+      <p class="service-desc">Een veilige Microsoft 365-omgeving start bij identity. Wij richten Conditional Access, MFA en risicobeleid in op basis van je actuele situatie, en borgen dit met periodieke controles zodat beveiliging niet verslapt na implementatie.</p>
+      <div class="service-tags">
+        <span class="tag-muted">Entra ID</span>
+        <span class="tag-muted">Defender</span>
+        <span class="tag-muted">Purview</span>
+        <span class="tag-muted">Conditional Access</span>
+        <span class="tag-muted">MFA</span>
+      </div>
+    </div>
+
+    <!-- Device Management -->
+    <div class="service-card-ext reveal rd2" id="devices">
+      <div class="service-icon-block"><div class="svc-icon device"></div></div>
+      <div class="service-title">Device Management</div>
+      <p class="service-desc">Modern werkplekbeheer via Microsoft Intune. Wij stellen compliance-beleid in, configureren Autopilot v2 voor zero-touch deployment en implementeren Windows Defender Application Control (WDAC) voor maximale beveiliging. Nieuwe medewerkers hoeven hun laptop alleen maar op te starten; de rest gaat automatisch.</p>
+      <div class="service-tags">
+        <span class="tag-muted">Intune</span>
+        <span class="tag-muted">Autopilot</span>
+        <span class="tag-muted">WDAC</span>
+        <span class="tag-muted">Compliance</span>
+        <span class="tag-muted">Windows</span>
+      </div>
+    </div>
+
+    <!-- Automatisering -->
+    <div class="service-card-ext reveal rd3" id="automatisering">
+      <div class="service-icon-block"><div class="svc-icon bolt"></div></div>
+      <div class="service-title">Automatisering</div>
+      <p class="service-desc">Repetitief beheerwerk wordt geautomatiseerd met PowerShell en Microsoft Graph. Daarmee vertalen wij handmatige taken naar herhaalbare workflows voor provisioning, rapportage en tenant-analyses, inclusief duidelijke output voor opvolging.</p>
+      <div class="service-tags">
+        <span class="tag-muted">PowerShell</span>
+        <span class="tag-muted">Graph API</span>
+        <span class="tag-muted">Bicep</span>
+        <span class="tag-muted">Automatisering</span>
+      </div>
+    </div>
+
+    <!-- Azure -->
+    <div class="service-card-ext reveal rd1" id="azure">
+      <div class="service-icon-block"><div class="svc-icon cloud"></div></div>
+      <div class="service-title">Azure &amp; Cloud</div>
+      <p class="service-desc">Azure-infrastructuur opgezet als Infrastructure as Code. Governance-beleid, resource management en kostenoptimalisatie zorgen voor een beheersbare cloudstrategie. Wij werken met Azure Bicep en ARM-templates voor reproduceerbare deployments, inclusief monitoring en documentatie.</p>
+      <div class="service-tags">
+        <span class="tag-muted">Azure</span>
+        <span class="tag-muted">Bicep</span>
+        <span class="tag-muted">ARM</span>
+        <span class="tag-muted">Governance</span>
+        <span class="tag-muted">IaC</span>
+      </div>
+    </div>
+
+    <!-- Portals -->
+    <div class="service-card-ext reveal rd2" id="portals">
+      <div class="service-icon-block"><div class="svc-icon chart"></div></div>
+      <div class="service-title">Denjoy Klantportaal</div>
+      <p class="service-desc">Elke klant krijgt een eigen tenant-omgeving in het Denjoy Platform. Daarin komen baseline-assessments, dashboardmodules, rapporthistorie en actiebeheer samen. Je ziet niet alleen de actuele stand, maar ook trend en voortgang per verbeterpunt.</p>
+      <div class="service-tags">
+        <span class="tag-muted">PowerShell</span>
+        <span class="tag-muted">Graph API</span>
+        <span class="tag-muted">Conditional Access</span>
+        <span class="tag-muted">Intune</span>
+        <span class="tag-muted">Exchange</span>
+        <span class="tag-muted">Secure Score</span>
+        <span class="tag-muted">FastAPI</span>
+      </div>
+    </div>
+
+    <!-- Migraties -->
+    <div class="service-card-ext reveal rd3" id="migraties">
+      <div class="service-icon-block">
+        <div class="svc-icon" style="display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--orange);font-weight:700;font-family:var(--mono);">→</div>
+      </div>
+      <div class="service-title">Migraties &amp; Onboarding</div>
+      <p class="service-desc">Migraties en onboarding starten met een intake en risicobeeld. Daarna volgt een gefaseerd plan met duidelijke overdrachtsdocumentatie, zodat je omgeving beheersbaar blijft tijdens en na de overgang.</p>
+      <div class="service-tags">
+        <span class="tag-muted">Migration</span>
+        <span class="tag-muted">Assessment</span>
+        <span class="tag-muted">Documentatie</span>
+        <span class="tag-muted">Runbooks</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="diensten-cta" id="contact">
+  <div class="diensten-cta-inner reveal">
+    <div class="section-label label-automation" style="display:flex;justify-content:center">Plan jouw demo</div>
+    <h2 class="section-title" style="color:var(--white);margin-bottom:1rem">Boek een technische demo-afspraak.</h2>
+    <p class="section-sub" style="color:oklch(65% 0.006 260);margin:0 auto 2rem">In 30 minuten laten we live zien hoe jouw tenant scoort, welke risico's prioriteit hebben en welke acties direct impact maken.</p>
+    <div style="display:flex;gap:0.85rem;justify-content:center;flex-wrap:wrap">
+      <a href="mailto:dennis@denjoy.nl?subject=Demo-aanvraag%20Denjoy%20Platform" class="btn btn-primary">Plan demo-gesprek →</a>
+      <a href="werkwijze.html" class="btn btn-ghost-dark">Bekijk werkwijze</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="index.html" class="nav-logo" style="margin-bottom:0.2rem">
+        <img src="/frontend-portal/images/web.svg" alt="Denjoy IT" class="logo-img">
+      </a>
+      <p class="footer-brand-desc">Microsoft 365 beheer en security. 20+ jaar ICT-ervaring.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Diensten</h4>
+      <ul>
+        <li><a href="diensten.html#security">Security &amp; Zero Trust</a></li>
+        <li><a href="diensten.html#devices">Device Management</a></li>
+        <li><a href="diensten.html#automatisering">Automatisering</a></li>
+        <li><a href="diensten.html#azure">Azure &amp; Cloud</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Pagina's</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="diensten.html">Diensten</a></li>
+        <li><a href="werkwijze.html">Werkwijze</a></li>
+        <li><a href="about.html">Over mij</a></li>
+        <li><a href="projects.html">Platform</a></li>
+        <li><a href="login.html">Klantportaal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:dennis@denjoy.nl">dennis@denjoy.nl</a></li>
+        <li><a href="https://denjoy.nl">denjoy.nl</a></li>
+        <li><a href="https://www.linkedin.com/in/dennis-schiphorst/?locale=en" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Denjoy IT — Dennis Jansen, Assendelft</span>
+    <span>KvK: 00000000 · BTW: NL000000000B01</span>
+  </div>
+</footer>
+
+</div><!-- /site-wrap -->
+<script src="js/site-shared.js"></script>
+<script src="js/page-diensten.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+/* ═══════════════════════════════════════════════════════════════
+   DENJOY IT — Design Token Referentie
+   ──────────────────────────────────────────────────────────────
+   DIT BESTAND WORDT NIET GEÏMPORTEERD op runtime.
+   Het dient als referentie/bron-van-waarheid.
+
+   De tokens zijn inline gekopieerd in:
+     - frontend-site/style.css       (alle :root tokens)
+     - frontend-portal/css/portal.css (alle :root tokens)
+
+   Reden: CSS @import met relatief pad werkt niet betrouwbaar
+   als de server alleen een submap serveert (bijv. Live Server
+   op frontend-site/ of frontend-portal/).
+
+   Bij aanpassen van tokens: update BEIDE stylesheets mee.
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&family=Red+Hat+Text:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Kleurpalet (OKLCH — perceptueel uniform, brand-tinted) */
+  --dark:        oklch(11%  0.015 260);
+  --dark2:       oklch(14%  0.015 260);
+  --dark3:       oklch(18%  0.022 260);
+  --dark4:       oklch(22%  0.025 260);
+  --orange:      oklch(68%  0.215  35);
+  --orange-dim:  oklch(68%  0.215  35 / 0.13);
+  --orange-glow: oklch(68%  0.215  35 / 0.22);
+  --green:       oklch(73%  0.19  150);
+  --red:         oklch(62%  0.24   27);
+  --yellow:      oklch(76%  0.18   75);
+  --light:       oklch(97%  0.006  75);
+  --white:       oklch(99%  0.004  75);
+  --text:        oklch(18%  0.015 260);
+  --muted:       oklch(53%  0.008 258);
+  --border-l:    oklch(91%  0.005  75);
+  --border:      oklch(91%  0.005  75);
+  --border-d:    oklch(100% 0      0  / 0.07);
+  /* Typografie */
+  --font:         'Red Hat Text',    sans-serif;
+  --font-display: 'Red Hat Display', sans-serif;
+  --mono:         'JetBrains Mono',  monospace;
+}
