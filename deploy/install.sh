@@ -67,8 +67,8 @@ fi
 log "Python virtual environment aanmaken in ${PLATFORM_DIR}..."
 python3 -m venv "${PLATFORM_DIR}/.venv"
 "${PLATFORM_DIR}/.venv/bin/pip" install --quiet --upgrade pip
-"${PLATFORM_DIR}/.venv/bin/pip" install --quiet cryptography
-log "Python dependencies geïnstalleerd (cryptography)."
+"${PLATFORM_DIR}/.venv/bin/pip" install --quiet -r "${PLATFORM_DIR}/requirements.txt"
+log "Python dependencies geïnstalleerd."
 
 # =============================================================================
 # STAP 4 — Systeemgebruiker aanmaken
@@ -152,7 +152,7 @@ Type=simple
 User=${APP_USER}
 Group=${APP_USER}
 WorkingDirectory=${PLATFORM_DIR}/backend-api
-ExecStart=/usr/bin/python3 ${PLATFORM_DIR}/backend-api/app.py
+ExecStart=${PLATFORM_DIR}/.venv/bin/python3 ${PLATFORM_DIR}/backend-api/app.py
 Environment=M365_LOCAL_WEBAPP_HOST=127.0.0.1
 Environment=M365_LOCAL_WEBAPP_PORT=${MAIN_PORT}
 Environment=M365_DATA_DIR=${PLATFORM_DIR}/backend-api/storage

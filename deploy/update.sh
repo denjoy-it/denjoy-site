@@ -37,7 +37,7 @@ chown -R "${APP_USER}:${APP_USER}" \
 
 # pip update
 if [ -x "${PLATFORM_DIR}/.venv/bin/pip" ]; then
-  "${PLATFORM_DIR}/.venv/bin/pip" install --quiet --upgrade cryptography
+  "${PLATFORM_DIR}/.venv/bin/pip" install --quiet --upgrade -r "${PLATFORM_DIR}/requirements.txt"
 else
   warn "Geen Python venv gevonden op ${PLATFORM_DIR}/.venv; pip-update wordt overgeslagen."
 fi
