@@ -7,9 +7,9 @@
 set -euo pipefail
 
 # ------------- Configuratie --------------------------------------------------
-PLATFORM_DIR="/var/www/mijn-website"   # Installatiemap op de server
+PLATFORM_DIR="/opt/denjoy-platform"    # Installatiemap op de server
 APP_USER="denjoy"                      # Systeemgebruiker voor de services
-MAIN_PORT="8787"                       # app.py (hoofdbackend — inclusief KB + upload)
+MAIN_PORT="8787"                       # app.py (enkelvoudige backend)
 NGINX_PORT="80"                        # Publieke poort (Nginx frontend)
 # -----------------------------------------------------------------------------
 
@@ -67,7 +67,8 @@ fi
 log "Python virtual environment aanmaken in ${PLATFORM_DIR}..."
 python3 -m venv "${PLATFORM_DIR}/.venv"
 "${PLATFORM_DIR}/.venv/bin/pip" install --quiet --upgrade pip
-log "Python dependencies geïnstalleerd (stdlib only — geen extra pakketten vereist)."
+"${PLATFORM_DIR}/.venv/bin/pip" install --quiet cryptography
+log "Python dependencies geïnstalleerd (cryptography)."
 
 # =============================================================================
 # STAP 4 — Systeemgebruiker aanmaken
@@ -92,7 +93,9 @@ log "Mappen en rechten instellen..."
 mkdir -p \
     "${PLATFORM_DIR}/backend-api/storage/html" \
     "${PLATFORM_DIR}/backend-api/storage/runs" \
-    "${PLATFORM_DIR}/backend-api/storage/kb"
+    "${PLATFORM_DIR}/backend-api/storage/kb" \
+    "${PLATFORM_DIR}/backend-api/storage/zerotrust_reports" \
+    "${PLATFORM_DIR}/backend-api/storage/intune_management_hub"
 
 chown -R "${APP_USER}:${APP_USER}" \
     "${PLATFORM_DIR}/backend-api/storage"
@@ -121,11 +124,12 @@ cat > "${CONFIG_FILE}" <<EOF
 {
   "default_run_mode": "demo",
   "assessment_ui_v1": true,
-    "script_path": "${PLATFORM_DIR}/assessment-engine/Start-M365BaselineAssessment.ps1",
+  "script_path": "${PLATFORM_DIR}/assessment-engine/Start-M365BaselineAssessment.ps1",
   "auth_tenant_id": "",
   "auth_client_id": "",
   "auth_cert_thumbprint": "",
-    "auth_client_secret": ""
+  "auth_client_secret": "",
+  "tenant_auth_profiles": {}
 }
 EOF
 chown "${APP_USER}:${APP_USER}" "${CONFIG_FILE}"

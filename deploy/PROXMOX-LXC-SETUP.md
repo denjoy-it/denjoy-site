@@ -4,14 +4,12 @@
 
 ```
 Browser → Nginx :80
-              ├── /upload-report, /web/, /api/kb/*/assets|vlans|pages|contacts
-              │        └── upload_server.py (Flask, :8080)
-              │             └── kb_api.py blueprint (SQLite per tenant)
-              │
-              └── alles overige
+              └── alles
                        └── app.py (stdlib ThreadingHTTPServer, :8787)
                            ├── Portal frontend (frontend-portal/)
-                            ├── REST API: tenants, runs, reports, findings
+                           ├── REST API: tenants, runs, rapporten, bevindingen
+                           ├── Knowledge Base API (kb_service)
+                           ├── Rapport upload (file_serving)
                            └── PowerShell subprocessen (assessment-engine)
                                      └── Start-M365BaselineAssessment.ps1 (pwsh)
                                           └── Microsoft.Graph modules → M365
@@ -49,13 +47,13 @@ apt-get update && apt-get upgrade -y
 
 Via scp vanaf je Mac:
 ```bash
-scp -r /pad/naar/denjoy-platform root@<LXC-IP>:/opt/denjoy-platform
+scp -r /pad/naar/denjoy-site root@<LXC-IP>:/opt/denjoy-platform
 ```
 
 Of via rsync (incrementeel updaten):
 ```bash
 rsync -avz --exclude='.git/' --exclude='backend-api/storage/' \
-    /pad/naar/denjoy-platform/ root@<LXC-IP>:/opt/denjoy-platform/
+    /pad/naar/denjoy-site/ root@<LXC-IP>:/opt/denjoy-platform/
 ```
 
 ### 3. Install script uitvoeren
@@ -126,14 +124,13 @@ Verander daarna `default_run_mode` van `demo` naar `script` via de platform UI o
 
 ```bash
 # Status
-systemctl status denjoy-platform denjoy-upload nginx
+systemctl status denjoy-platform nginx
 
 # Logs live
 journalctl -u denjoy-platform -f
-journalctl -u denjoy-upload -f
 
 # Herstarten
-systemctl restart denjoy-platform denjoy-upload
+systemctl restart denjoy-platform
 
 # Na code-update (rsync)
 bash /opt/denjoy-platform/deploy/update.sh
@@ -149,17 +146,16 @@ ufw allow 80/tcp      # Nginx (platform UI)
 ufw enable
 ```
 
-Poorten 8787 en 8080 hoeven **niet** open — die zijn alleen intern via Nginx bereikbaar.
+Poort 8787 hoeft **niet** open — die is alleen intern via Nginx bereikbaar.
 
 ---
 
 ## Poortoverzicht
 
-| Service          | Poort | Bereik       |
-|------------------|-------|--------------|
-| Nginx (UI)       | 80    | Extern       |
+| Service          | Poort | Bereik        |
+|------------------|-------|---------------|
+| Nginx (UI)       | 80    | Extern        |
 | app.py (backend) | 8787  | Alleen intern |
-| upload_server.py | 8080  | Alleen intern |
 
 ---
 
@@ -177,20 +173,6 @@ apt-get install -y powershell
 ```bash
 which pwsh   # moet /usr/bin/pwsh zijn
 pwsh --version
-```
-
-### Upload server start niet (kb_api import error)
-```bash
-journalctl -u denjoy-upload --no-pager -n 30
-# Controleer dat PYTHONPATH correct is in de service:
-systemctl cat denjoy-upload | grep PYTHON
-```
-
-### CORS fout in browser console
-De `UPLOAD_ALLOWED_ORIGINS=*` in de service lost dit op. Controleer:
-```bash
-systemctl cat denjoy-upload | grep ORIGINS
-systemctl restart denjoy-upload
 ```
 
 ### Rapport uploaden mislukt (grote rapporten)

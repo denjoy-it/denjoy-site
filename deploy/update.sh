@@ -5,7 +5,7 @@
 # =============================================================================
 set -euo pipefail
 
-PLATFORM_DIR="/var/www/mijn-website"
+PLATFORM_DIR="/opt/denjoy-platform"
 APP_USER="denjoy"
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
@@ -16,7 +16,7 @@ warn() { echo -e "${YELLOW}[!]${NC} $*"; }
 
 log "Services stoppen..."
 if command -v systemctl >/dev/null 2>&1; then
-  systemctl stop denjoy-platform denjoy-upload 2>/dev/null || true
+  systemctl stop denjoy-platform 2>/dev/null || true
 else
   warn "systemctl niet beschikbaar; services worden niet automatisch gestopt."
 fi
@@ -37,7 +37,7 @@ chown -R "${APP_USER}:${APP_USER}" \
 
 # pip update
 if [ -x "${PLATFORM_DIR}/.venv/bin/pip" ]; then
-  "${PLATFORM_DIR}/.venv/bin/pip" install --quiet --upgrade flask flask-cors
+  "${PLATFORM_DIR}/.venv/bin/pip" install --quiet --upgrade cryptography
 else
   warn "Geen Python venv gevonden op ${PLATFORM_DIR}/.venv; pip-update wordt overgeslagen."
 fi
@@ -54,5 +54,3 @@ if command -v systemctl >/dev/null 2>&1; then
 else
   warn "systemctl niet beschikbaar; services worden niet automatisch herstart."
 fi
-
-log "Update voltooid."
